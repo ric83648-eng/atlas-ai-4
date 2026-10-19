@@ -1,0 +1,6 @@
+{
+  "name": "Atlas AI",
+  "description": "Atlas AI - Assistente Inteligente com respostas detalhadas e gerador de imagens em tema escuro azul e roxo.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
