@@ -56,7 +56,7 @@ export const Header: React.FC<HeaderProps> = ({
                 Atlas AI
               </span>
               <span className="hidden sm:inline-flex px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider rounded-md bg-purple-950/80 text-purple-300 border border-purple-800/40">
-                v3.7
+                v3.8
               </span>
             </div>
             <p className="hidden md:block text-[11px] text-slate-400 -mt-0.5">

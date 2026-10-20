@@ -69,15 +69,24 @@ export const ChatView: React.FC<ChatViewProps> = ({
     const trimmed = inputValue.trim();
     if ((!trimmed && !attachedImage) || isLoading) return;
 
-    // Check if user requested image generation via prompt starting with /imagem or "gere uma imagem"
+    // Check if user requested image generation via prompt starting with /imagem, /foto, or "crie uma foto/imagem"
     const lower = trimmed.toLowerCase();
     const isImageIntent =
       isGeneratingImageMode ||
       lower.startsWith('/imagem') ||
       lower.startsWith('/image') ||
+      lower.startsWith('/foto') ||
       lower.startsWith('gere uma imagem') ||
       lower.startsWith('crie uma imagem') ||
       lower.startsWith('gerar imagem') ||
+      lower.startsWith('gere uma foto') ||
+      lower.startsWith('crie uma foto') ||
+      lower.startsWith('gerar foto') ||
+      lower.startsWith('faça uma foto') ||
+      lower.startsWith('faça foto') ||
+      lower.startsWith('crie foto') ||
+      lower.startsWith('foto real') ||
+      lower.startsWith('fotos reais') ||
       lower.startsWith('desenhe') ||
       lower.startsWith('generate image') ||
       lower.startsWith('draw') ||
@@ -86,7 +95,7 @@ export const ChatView: React.FC<ChatViewProps> = ({
     let finalPrompt = trimmed;
     if (isImageIntent) {
       finalPrompt = trimmed.replace(
-        /^(\/(imagem|image)|gere\s+uma\s+imagem\s+(de\s+|para\s+)?|crie\s+uma\s+imagem\s+(de\s+|para\s+)?|gerar\s+imagem\s+(de\s+|para\s+)?|desenhe\s+(um\s+|uma\s+)?|generate\s+image\s+(of\s+)?|create\s+image\s+(of\s+)?|draw\s+(a\s+|an\s+)?)\s*/i,
+        /^(\/(imagem|image|foto)|gere\s+(uma\s+)?(imagem|foto)\s+(de\s+|para\s+)?|crie\s+(uma\s+)?(imagem|foto)\s+(de\s+|para\s+)?|gerar\s+(imagem|foto)\s+(de\s+|para\s+)?|faça\s+(uma\s+)?foto\s+(de\s+|para\s+)?|foto(s)?\s+rea(l|is)\s+(de\s+|da\s+|do\s+)?|desenhe\s+(um\s+|uma\s+)?|generate\s+image\s+(of\s+)?|create\s+image\s+(of\s+)?|draw\s+(a\s+|an\s+)?)\s*/i,
         ''
       ).trim() || trimmed;
     }

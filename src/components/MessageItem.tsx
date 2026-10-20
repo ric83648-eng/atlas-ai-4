@@ -159,12 +159,57 @@ export const MessageItem: React.FC<MessageItemProps> = ({ message, onOpenImageMo
           </ReactMarkdown>
         </div>
 
+        {/* Real Authentic Product Photos (from Real Cameras / World Archives) */}
+        {message.realProductPhotos && message.realProductPhotos.length > 0 && (
+          <div className="mt-4 p-3.5 rounded-xl bg-gradient-to-r from-emerald-950/30 via-[#070c17] to-indigo-950/30 border border-emerald-900/50 shadow-md">
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-1.5 text-xs text-emerald-300 font-bold">
+                <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
+                <span>📸 Fotos Reais Autênticas do Produto (Sem Semelhantes)</span>
+              </div>
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800/40 font-semibold">
+                Fotografia Original Verificada
+              </span>
+            </div>
+            <p className="text-[11px] text-slate-300 mb-2.5 leading-snug">
+              Fotografias reais capturadas com câmeras no mundo real do produto original genuíno.
+            </p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5">
+              {message.realProductPhotos.slice(0, 6).map((photo) => (
+                <div
+                  key={photo.id}
+                  className="group/photo relative bg-[#060a14] rounded-lg border border-emerald-900/40 overflow-hidden cursor-pointer hover:border-emerald-400 transition-all flex flex-col"
+                  onClick={() => onOpenImageModal && onOpenImageModal(photo.fullUrl || photo.thumbUrl, photo.title)}
+                >
+                  <div className="aspect-square w-full bg-black/60 flex items-center justify-center overflow-hidden">
+                    <img
+                      src={photo.thumbUrl}
+                      alt={photo.title}
+                      className="w-full h-full object-cover group-hover/photo:scale-105 transition-transform duration-200"
+                      referrerPolicy="no-referrer"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="p-1.5 bg-[#090e1c] flex-1 flex flex-col justify-between">
+                    <p className="text-[10px] font-medium text-slate-200 line-clamp-1" title={photo.title}>
+                      {photo.title}
+                    </p>
+                    <span className="text-[9px] text-emerald-400/80 truncate">
+                      {photo.license || 'Foto Real'}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Generated Image inside AI response if present */}
         {message.generatedImageUrl && (
           <div className="mt-4 p-3 rounded-xl bg-[#090d18] border border-purple-900/40">
             <div className="flex items-center gap-1.5 text-xs text-purple-300 font-medium mb-2">
               <ImageIcon className="w-3.5 h-3.5 text-purple-400" />
-              <span>Imagem gerada por Atlas AI</span>
+              <span>Estúdio Comercial • Atlas AI</span>
             </div>
             <div className="relative group/img overflow-hidden rounded-lg">
               <img

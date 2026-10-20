@@ -303,9 +303,22 @@ Você é capaz de responder dúvidas complexas, programar, redigir textos, resol
     try {
       if (isImageGenRequest) {
         // Detect requested style from prompt text
-        let detectedStyle = 'realistic';
+        let detectedStyle = 'commercial-product';
         const lowerPrompt = content.toLowerCase();
-        if (lowerPrompt.includes('anime') || lowerPrompt.includes('manga') || lowerPrompt.includes('desenho')) {
+        if (
+          lowerPrompt.includes('ferrari') ||
+          lowerPrompt.includes('porsche') ||
+          lowerPrompt.includes('lamborghini') ||
+          lowerPrompt.includes('tesla') ||
+          lowerPrompt.includes('cybertruck') ||
+          lowerPrompt.includes('supercarro') ||
+          lowerPrompt.includes('carro esportivo') ||
+          lowerPrompt.includes('bmw') ||
+          lowerPrompt.includes('mercedes') ||
+          lowerPrompt.includes('audi')
+        ) {
+          detectedStyle = 'automotive-real';
+        } else if (lowerPrompt.includes('anime') || lowerPrompt.includes('manga') || lowerPrompt.includes('desenho')) {
           detectedStyle = 'anime';
         } else if (lowerPrompt.includes('cyberpunk') || lowerPrompt.includes('neon') || lowerPrompt.includes('futurista')) {
           detectedStyle = 'cyberpunk';
@@ -317,9 +330,17 @@ Você é capaz de responder dúvidas complexas, programar, redigir textos, resol
           detectedStyle = 'minimalist';
         } else if (lowerPrompt.includes('cinema') || lowerPrompt.includes('cinematográfico')) {
           detectedStyle = 'cinematic';
+        } else if (
+          lowerPrompt.includes('natureza') ||
+          lowerPrompt.includes('paisagem') ||
+          lowerPrompt.includes('animal') ||
+          lowerPrompt.includes('leão') ||
+          lowerPrompt.includes('floresta')
+        ) {
+          detectedStyle = 'realistic';
         }
 
-        // Direct Image Generation request from chat with web search grounding enabled
+        // Direct Image Generation request from chat with real brands and anti-lookalike fidelity
         const res = await fetch('/api/generate-image', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -329,6 +350,8 @@ Você é capaz de responder dúvidas complexas, programar, redigir textos, resol
             style: detectedStyle,
             referenceImage: image,
             webSearch: true,
+            realBrandsMode: true,
+            antiLookalikeMode: true,
           }),
         });
 
@@ -349,6 +372,7 @@ Você é capaz de responder dúvidas complexas, programar, redigir textos, resol
           aspectRatio: data.aspectRatio || '1:1',
           style: detectedStyle,
           sources: data.sources || [],
+          realProductPhotos: data.realProductPhotos || [],
           createdAt: Date.now(),
         };
 
@@ -357,9 +381,10 @@ Você é capaz de responder dúvidas complexas, programar, redigir textos, resol
         const assistantMessage: ChatMessage = {
           id: 'msg-asst-' + Date.now(),
           role: 'assistant',
-          content: `Aqui está a imagem real gerada para: **"${content}"**`,
+          content: `Aqui está a fotografia comercial autêntica gerada para: **"${content}"**`,
           timestamp: Date.now(),
           generatedImageUrl: data.imageUrl,
+          realProductPhotos: data.realProductPhotos,
           sources: data.sources,
         };
 
@@ -410,6 +435,7 @@ Você é capaz de responder dúvidas complexas, programar, redigir textos, resol
           role: 'assistant',
           content: data.text,
           sources: data.sources,
+          realProductPhotos: data.realProductPhotos,
           timestamp: Date.now(),
         };
 

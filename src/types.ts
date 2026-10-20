@@ -1,3 +1,16 @@
+export interface RealProductPhoto {
+  id: string;
+  title: string;
+  thumbUrl: string;
+  fullUrl: string;
+  mime: string;
+  width?: number;
+  height?: number;
+  author?: string;
+  license?: string;
+  description?: string;
+}
+
 export interface ChatMessage {
   id: string;
   role: 'user' | 'assistant';
@@ -7,6 +20,7 @@ export interface ChatMessage {
   sources?: Array<{ title: string; url: string }>;
   isError?: boolean;
   generatedImageUrl?: string; // If this response produced an image directly
+  realProductPhotos?: RealProductPhoto[]; // Real camera photos of the actual product
 }
 
 export interface ChatSession {
@@ -25,6 +39,7 @@ export interface GeneratedImage {
   aspectRatio: string;
   style: string;
   sources?: Array<{ title: string; url: string }>;
+  realProductPhotos?: RealProductPhoto[];
   createdAt: number;
 }
 
